@@ -2,11 +2,11 @@ import { app } from './serve';
 import {env} from './env'
 //routes register
 
- import { router as example } from './routes/example';
+ import { router as personal } from './routes/personal';
 
 
 
-app.use('/api/example',example);
+app.use('/api/personal',personal);
 
 
 app.listen(env.PORT, () => {

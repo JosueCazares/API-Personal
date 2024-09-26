@@ -13,7 +13,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Example {
-  id   Int    @id @default(autoincrement())
-  name String
+model Areas {
+  id Int @id @default(autoincrement())
+  nombre String 
+  create_at DateTime @default(now())
+  update_at DateTime @updatedAt
+}
+
+model Catalogo_personal{
+  nombre String
+  correo String
+  telefono String
+  curp String @unique
+  numero_empleado String
+  tipo_contrato Contrato
+  fecha_ingreso String
+  grupo Grupo
+  estatus Estatus
+  area String
+  create_at DateTime @default(now())
+  update_at DateTime @updatedAt
+}
+
+enum Estatus {
+  ACTIVO
+  INACTIVO
+}
+
+enum Contrato {
+  BASE
+  POR_HONORARIOS
+}
+
+enum Grupo {
+  PROFESORES
+  RECURSOS_HUMANOS
+  SERVICIOS_ESCOLARES
+  INFORMATICA
 }
