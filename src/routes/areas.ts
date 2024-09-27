@@ -20,21 +20,34 @@ router.get('/', async (_: Request, res: Response) => {
     return res.status(200).json(responseOk);
 })
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', async (req:Request, res:Response) => {
     try{
-        const camposValidados = ZodAreasObj.parse(req.body)
-        
-        //Creación de Áreas
-        let newArea = await prisma.areas.create({
-            data : camposValidados
-        
+        let dataValidate = ZodAreasObj.parse(req.body)
+
+        let areaFind = await prisma.areas.findFirst({
+            where:{
+                OR: [
+                    {nombre: dataValidate.nombre}
+                ]
+            }
+        })
+        if(areaFind){
+            let responseError:APIResponse<null> = {
+                status: "error",
+                error: "El área ya existe"
+            }
+            return res.status(400).json(responseError);
+        }
+        let newRol = await prisma.areas.create({
+            data: dataValidate
+        })
         let responseOk: APIResponse<Areas> = {
             status: 'success',
-            data: newArea
+            data: newRol
         }
         return res.status(200).json(responseOk)
 
-    } catch (error) {
+    }catch (error) {
         let responseError: APIResponse<Error> = {
             status: "error",
             error: "Error en el servidor"
