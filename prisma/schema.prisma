@@ -29,11 +29,11 @@ model Catalogo_personal {
   curp String @unique
   numero_empleado String
   tipo_contrato Contrato
-  fecha_ingreso String
+  fecha_ingreso String  
   grupo Grupo
   estatus Estatus
-  areaId Int? 
-  area Areas? @relation(fields: [areaId], references: [id]) // Relación con el modelo Areas
+  areaId Int 
+  area Areas @relation(fields: [areaId], references: [id]) // Relación con el modelo Areas
   create_at DateTime @default(now())
   update_at DateTime @updatedAt
 }
