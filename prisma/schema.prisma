@@ -32,10 +32,10 @@ model Catalogo_personal {
   fecha_ingreso String  
   grupo Grupo
   estatus Estatus
-  areaId Int 
-  area Areas @relation(fields: [areaId], references: [id]) // Relación con el modelo Areas
+  area Areas @relation(fields: [areaId], references: [id])
   create_at DateTime @default(now())
   update_at DateTime @updatedAt
+  areaId Int 
 }
 
 

@@ -3,17 +3,17 @@ import type { Request, Response } from 'express';
 import { prisma } from '../db'
 import type { APIResponse } from '../lib/types';
 import type { Catalogo_personal } from '@prisma/client';
-import {ZodPersonalObj} from '@/validation/ZodPersonal'
+import {ZodPersonalObj,ZodPersonalIdObj} from '@/validation/ZodPersonal'
 import { z, type ZodIssue } from 'zod';
 
 export const router = Router();
 
 router.get('/', async (_: Request, res: Response) => {
-    let examples = await prisma.catalogo_personal.findMany();
+    let personal = await prisma.catalogo_personal.findMany();
 
     let responseOk: APIResponse<Catalogo_personal[]> = {
         status: 'success',
-        data: examples
+        data: personal
     }
 
     return res.status(200).json(responseOk);
@@ -36,12 +36,19 @@ router.post('/', async (req: Request, res: Response) => {
             return res.status(400).json(responseError)
         }
 
-        let personal = await prisma.catalogo_personal.create({
-            data : camposValidados
+        let newPersonal = await prisma.catalogo_personal.create({
+            data: {
+                ...camposValidados,
+                area:{
+                    connect:{
+                        id: camposValidados.area
+                    }
+                }
+            }
         });
         let responseOk: APIResponse<Catalogo_personal> = {
             status: 'success',
-            data: personal
+            data: newPersonal
         }
         return res.status(200).json(responseOk)
     } catch (error) {
