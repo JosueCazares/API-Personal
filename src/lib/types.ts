@@ -1,5 +1,6 @@
  import type{
-    Example,
+    Catalogo_personal,
+    Areas
 
 } from '@prisma/client'; 
 
@@ -17,5 +18,6 @@ export interface LoginResponseData {
 }
 
 export type{
-    Example,
+    Catalogo_personal,
+    Areas
 }

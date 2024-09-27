@@ -17,8 +17,6 @@ model Areas {
   id Int @id @default(autoincrement())
   nombre String 
   catalogo_personal Catalogo_personal[]
-  create_at DateTime @default(now())
-  update_at DateTime @updatedAt
 }
 
 model Catalogo_personal {
