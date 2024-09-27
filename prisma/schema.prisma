@@ -16,11 +16,13 @@ datasource db {
 model Areas {
   id Int @id @default(autoincrement())
   nombre String 
+  catalogo_personal Catalogo_personal[]
   create_at DateTime @default(now())
   update_at DateTime @updatedAt
 }
 
-model Catalogo_personal{
+model Catalogo_personal {
+  id Int @id @default(autoincrement())
   nombre String
   correo String
   telefono String
@@ -30,10 +32,12 @@ model Catalogo_personal{
   fecha_ingreso String
   grupo Grupo
   estatus Estatus
-  area String
+  areaId Int? 
+  area Areas? @relation(fields: [areaId], references: [id]) // Relación con el modelo Areas
   create_at DateTime @default(now())
   update_at DateTime @updatedAt
 }
+
 
 enum Estatus {
   ACTIVO

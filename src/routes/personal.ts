@@ -37,7 +37,7 @@ router.post('/', async (req: Request, res: Response) => {
         }
 
         let personal = await prisma.catalogo_personal.create({
-            data: camposValidados
+            data : camposValidados
         });
         let responseOk: APIResponse<Catalogo_personal> = {
             status: 'success',
