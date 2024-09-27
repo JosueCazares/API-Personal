@@ -35,17 +35,40 @@ router.post('/', async (req: Request, res: Response) => {
             }
             return res.status(400).json(responseError)
         }
-
-        let newPersonal = await prisma.catalogo_personal.create({
-            data: {
-                ...camposValidados,
-                area:{
-                    connect:{
-                        id: camposValidados.area
-                    }
-                }
+        // Verificar si el área existe
+        let areaFind = await prisma.areas.findUnique({
+            where: {
+                id: camposValidados.areaId
             }
         });
+        // Si el área no existe, retornar un error
+        if (!areaFind) {
+            let responseError: APIResponse<String> = {
+                status: 'error',
+                data: "Área no encontrada"
+            };
+            return res.status(400).json(responseError);
+        }
+        //Creación de nuevo personal/empleado
+        let newPersonal = await prisma.catalogo_personal.create({
+            data: {
+                nombre: camposValidados.nombre,
+                correo: camposValidados.correo,
+                telefono: camposValidados.telefono,
+                curp: camposValidados.curp,
+                numero_empleado: camposValidados.numero_empleado,
+                tipo_contrato: camposValidados.tipo_contrato,
+                fecha_ingreso: camposValidados.fecha_ingreso,
+                grupo: camposValidados.grupo,
+                estatus: camposValidados.estatus,
+            area:{
+                connect:{
+                    id: camposValidados.areaId
+                }
+            }
+            }
+        });
+        
         let responseOk: APIResponse<Catalogo_personal> = {
             status: 'success',
             data: newPersonal

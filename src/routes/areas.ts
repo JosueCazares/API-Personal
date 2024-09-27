@@ -3,8 +3,9 @@ import type { Request, Response } from 'express';
 import { prisma } from '../db'
 import type { APIResponse } from '../lib/types';
 import type { Areas } from '@prisma/client';
-import {ZodAreasObj} from '@/validation/ZodAreas'
+import {ZodAreasObj,ZodAreaIdObj,ZodAreaId} from '@/validation/ZodAreas'
 import { z, type ZodIssue } from 'zod';
+
 
 export const router = Router();
 
@@ -18,3 +19,4 @@ router.get('/', async (_: Request, res: Response) => {
 
     return res.status(200).json(responseOk);
 })
+
