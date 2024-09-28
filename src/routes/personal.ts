@@ -90,3 +90,43 @@ router.post('/', async (req: Request, res: Response) => {
         return res.status(500).json(responseError)
     }
 });
+
+router.put('/', async (req: Request, res: Response) => {
+    try{
+        const camposValidados = ZodPersonalIdObj.parse(req.body)
+        let personalBusqueda = await prisma.catalogo_personal.findFirst({
+            where : {id: camposValidados.id},
+        });
+
+        if(!personalBusqueda){
+            let responseError: APIResponse<Error> = {
+                status: "error",
+                error: "Personal no encontrado"
+            }
+            return res.status(404).json(responseError)
+        }
+        let personal = await prisma.catalogo_personal.update({
+           where : {id: camposValidados.id},
+            data: camposValidados
+        });
+        let responseOk: APIResponse<Catalogo_personal> = {
+            status: 'success',
+            data: personal
+        }
+        return res.status(200).json(responseOk)
+    } catch (error) {
+        let responseError: APIResponse<Error> = {
+            status: "error",
+            error: "Error en el servidor"
+        }
+        if (error instanceof z.ZodError) {
+            let responseErrorZod:APIResponse<ZodIssue[]> = {
+                status: "error",
+                error: "Datos invalidos",
+                data: error.errors
+            }
+            return res.status(400).json(responseErrorZod)
+        }
+        return res.status(500).json(responseError)
+    }
+});

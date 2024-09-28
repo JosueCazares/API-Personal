@@ -2,7 +2,6 @@ import {z} from 'zod'
 import { Estatus } from '@prisma/client'
 import { Contrato } from '@prisma/client'
 import { Grupo } from '@prisma/client'
-import { ZodAreasObj } from './ZodAreas'
 
 export const ZodPersonalObj = z.object({
     nombre : z.string(),
@@ -28,5 +27,5 @@ export const ZodPersonalIdObj = z.object({
     fecha_ingreso : z.string(),
     grupo : z.enum([Grupo.INFORMATICA, Grupo.PROFESORES, Grupo.RECURSOS_HUMANOS, Grupo.SERVICIOS_ESCOLARES]),
     estatus : z.enum([Estatus.ACTIVO, Estatus.INACTIVO]),
-    area: z.number()
+    areaid: z.number()
 })
