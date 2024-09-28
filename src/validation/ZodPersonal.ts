@@ -27,5 +27,5 @@ export const ZodPersonalIdObj = z.object({
     fecha_ingreso : z.string(),
     grupo : z.enum([Grupo.INFORMATICA, Grupo.PROFESORES, Grupo.RECURSOS_HUMANOS, Grupo.SERVICIOS_ESCOLARES]),
     estatus : z.enum([Estatus.ACTIVO, Estatus.INACTIVO]),
-    areaid: z.number()
+    areaId: z.number()
 })

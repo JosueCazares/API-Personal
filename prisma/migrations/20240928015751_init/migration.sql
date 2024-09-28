@@ -1,24 +1,14 @@
-/*
-  Warnings:
-
-  - You are about to drop the `example` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE `example`;
-
 -- CreateTable
 CREATE TABLE `Areas` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `nombre` VARCHAR(191) NOT NULL,
-    `create_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `update_at` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Catalogo_personal` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `nombre` VARCHAR(191) NOT NULL,
     `correo` VARCHAR(191) NOT NULL,
     `telefono` VARCHAR(191) NOT NULL,
@@ -28,9 +18,13 @@ CREATE TABLE `Catalogo_personal` (
     `fecha_ingreso` VARCHAR(191) NOT NULL,
     `grupo` ENUM('PROFESORES', 'RECURSOS_HUMANOS', 'SERVICIOS_ESCOLARES', 'INFORMATICA') NOT NULL,
     `estatus` ENUM('ACTIVO', 'INACTIVO') NOT NULL,
-    `area` VARCHAR(191) NOT NULL,
     `create_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `update_at` DATETIME(3) NOT NULL,
+    `areaId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Catalogo_personal_curp_key`(`curp`)
+    UNIQUE INDEX `Catalogo_personal_curp_key`(`curp`),
+    PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `Catalogo_personal` ADD CONSTRAINT `Catalogo_personal_areaId_fkey` FOREIGN KEY (`areaId`) REFERENCES `Areas`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
