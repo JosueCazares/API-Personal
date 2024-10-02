@@ -1,6 +1,6 @@
  import type{
-    Example,
-
+    Catalogo_personal,
+    Areas,
 } from '@prisma/client'; 
 
 export type APIResponse<T> = {
@@ -17,5 +17,6 @@ export interface LoginResponseData {
 }
 
 export type{
-    Example,
+    Catalogo_personal,
+    Areas,
 }
